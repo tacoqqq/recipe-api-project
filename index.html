@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Overwatch</title>
+    <link rel="stylesheet" href="style.css">
+<head>
+
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Overwatch</h1>
+        <form>
+            <label for="js-search-bar"><input id="js-search-bar" type="text" name="search-term" placeholder="enter ingrdients or dishes eg. chicken, pasta" required></label>
+            <input type="image" id="search-image" name="submit" alt="submit" src="img/search-img.png">
+            <div class="filter">
+                <form class="filter-form">
+                    <div class="calorie-filter-container">
+                        <span>Calorie Range</span>
+                        <input class="calorie-filter" id="min-cal" type="text" placeholder="Min">
+                        <span>to</span>
+                        <input class="calorie-filter" id="max-cal" type="text" placeholder="Max">
+                    </div>
+                    <fieldset class="diet-type-conatiner">
+                        <legend>Diet Type</legend>
+                        <label for="diet-no-preference"><input class="default" id="diet-no-preference" type="radio" value="" checked>No Preference</label>
+                        <label for="balanced"><input class="diet-type-option" id="balanced" type="checkbox" value="balanced">Balanced</label>
+                        <label for="high-protein"><input class="diet-type-option" id="high-protein" type="checkbox" value="high-protein">High Protein</label>
+                        <label for="low-fat"><input class="diet-type-option" id="low-fat" type="checkbox" value="low-fat">Low Fat</label>
+                        <label for="low-carb"><input class="diet-type-option" id="low-carb" type="checkbox" value="low-carb">Low Carb</label>
+                    </fieldset>
+                    <fieldset class="health-concern-container">
+                        <legend>Health Concern</legend>
+                        <label for="health-no-preference"><input class="default" id="health-no-preference" type="radio" value="" checked>No Preference</label>
+                        <label for="vegan"><input class="health-concern-option" id="vegan" type="checkbox" value="vegan">Vegan</label>
+                        <label for="vegetarian"><input class="health-concern-option" id="vegetarian" type="checkbox" value="vegetarian">Vegetarian</label>
+                        <label for="sugar-conscious"><input class="health-concern-option" id="sugar-conscious" type="checkbox" value="sugar-conscious">Sugar-Conscious</label>
+                        <label for="peanut-free"><input class="health-concern-option" id="peanut-free" type="checkbox" value="peanut-free">Peanut-Free</label>
+                        <label for="tree-nut-free"><input class="health-concern-option" id="tree-nut-free" type="checkbox" value="tree-nut-free">Tree-Nut-Free</label>
+                        <label for="alcohol-free"><input class="health-concern-option" id="alcohol-free" type="checkbox" value="alcohol-free">Alcohol-Free</label>
+                    </fieldset>
+                </form>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+
+
+</html>

@@ -1,0 +1,53 @@
+body {
+    font-size: 18px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 85%;
+    margin: auto auto;
+    text-align: center;
+    position: relative;
+    top: 50px;
+}
+
+
+h1 {
+    font-size: 36px;
+}
+
+#js-search-bar {
+    width: 400px;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+#search-image {
+    display: inline-block;
+    width: 30px;
+    position: relative;
+    top: 10px;
+}
+
+.filter {
+    width: 80%;
+    margin: 10px auto;
+    text-align: center;  
+    font-size: 14px;  
+}
+
+.calorie-filter {
+    display: inline-block;
+    padding: 8px;
+}
+
+label {
+    margin: 5px;
+}
+
+fieldset {
+    margin: 20px auto;
+    font-size: 14px;
+}
