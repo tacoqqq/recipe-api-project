@@ -12,13 +12,13 @@
 <body>
     <div class="container">
         <h1>Recipe Overwatch</h1>
-        <form>
-            <label for="js-search-bar"><input id="js-search-bar" type="text" name="search-term" placeholder="enter ingrdients or dishes eg. chicken, pasta" required></label>
+        <form id="main-form"> 
+            <label for="js-search-bar"><input id="js-search-bar" type="text" name="search-term" placeholder="Search ingredients or dishes eg. chicken,pasta" required></label>
             <input type="image" id="search-image" name="submit" alt="submit" src="img/search-img.png">
             <div class="filter">
                 <form class="filter-form">
                     <div class="calorie-filter-container">
-                        <span>Calorie Range</span>
+                        <span>Calorie Range:</span>
                         <input class="calorie-filter" id="min-cal" type="text" placeholder="Min">
                         <span>to</span>
                         <input class="calorie-filter" id="max-cal" type="text" placeholder="Max">
@@ -44,6 +44,11 @@
                 </form>
             </div>
         </form>
+        <p id="js-error-message" class="error-message"></p>
+        <section id="display-result" class="hidden">
+            <h2>There are <span id="search-result-number">0</span> matching recipes:</h2>
+            <ul id="result-list"></ul>
+        </section>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="index.js"></script>
