@@ -3,7 +3,6 @@ const appKey = "e1d29fa29c215f19e1408451b2c270b4";
 const baseUrl = "https://api.edamam.com/search";
 
 //This function listens for the click events happened on the filters.
-
 function filterListener(){
 /*Below listen for the diet type filter.
     $('.diet-type-option').click(event => {
@@ -52,32 +51,16 @@ function filterListener(){
 }
 
 
-function checkCalorieInput(min,max) {
-    console.log('checkcalorieinput')
-    let minCal = "0";
-    let maxCal = "10000";
-    if (min != ""){
-        minCal = min;
-    }
-    if (max != ""){
-        maxCal = max;
-    }
-    return `${minCal}-${maxCal}`
-}
-
-
-function formatParameter(paramValueObj){
-    const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
-    const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
-    return paramValueArr.join('&');
-}
-
 function displayResults(responseJson){
-    let totalResultNumber = responseJson.count;
+    let totalResultNumber = responseJson.hits.length;
     let recipeArr = responseJson.hits;
+
+    //12/3/2019 note: set the temporarylimit to test the display otherwise it takes forever to load. need to develop pagination later
+    let temporaryLimit = 10;
+
     $('#display-result').removeClass('hidden');
     $('#search-result-number').text(totalResultNumber);
-    for (let i = 0 ; i < 10 ; i++){
+    for (let i = 0 ; i < temporaryLimit ; i++){
         let recipeName = recipeArr[i].recipe.label;
         console.log(recipeName);
         let recipeImage = recipeArr[i].recipe.image;
@@ -94,14 +77,22 @@ function displayResults(responseJson){
     }
 }
 
+function formatParameter(paramValueObj){
+    const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
+    const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
+    return paramValueArr.join('&');
+}
+
+
 function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
     const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
     const completeQuery = queryArr.join(","); // "chick,tomato"
+    const encodedCompleteQuery = completeQuery.replace(" ", "%20")
 
     const param = {
         app_id: appId,
         app_key: appKey,
-        q: completeQuery,
+        q: encodedCompleteQuery,
         calories: calorieRange,
         diet: dietType,
         health: healthConcernSelected
@@ -119,6 +110,7 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
 
     const queryString = formatParameter(param);
     const finalUrl = baseUrl + '?' + queryString;
+
     console.log(finalUrl);
 
     fetch(finalUrl)
@@ -126,6 +118,7 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
             if (response.ok){
                 return response.json();
             }
+            //how do I customize error message?
             throw new Error(response.statusText);
         })
         .then(responseJson => displayResults(responseJson))
@@ -134,10 +127,8 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
         })
 }
 
-//I don't know what happened with this function.....
-function checkHealthConcernInput(){
-    console.log('enter checkHealthConcernInput')
 
+function checkHealthConcernInput(){
     if ($('#health-no-preference').prop('checked')){
         return "no-preference"
     }
@@ -153,9 +144,21 @@ function checkHealthConcernInput(){
 }
 
 
+function checkCalorieInput(min,max) {
+    let minCal = "0";
+    let maxCal = "10000";
+    if (min != ""){
+        minCal = min;
+    }
+    if (max != ""){
+        maxCal = max;
+    }
+    return `${minCal}-${maxCal}`
+}
+
+
 function watchForm(){
     $('#main-form').submit(event => {
-        console.log('hello')
         event.preventDefault();
         const searchTerm = $('#js-search-bar').val();  
         const minCal = $('#min-cal').val();
@@ -163,14 +166,12 @@ function watchForm(){
         const calories = checkCalorieInput(minCal,maxCal);
         const dietTypeSelected = $('.diet-type-option:checked').val();
         const healthConcernSelected = checkHealthConcernInput();
-        console.log(healthConcernSelected);
         getRecipes(searchTerm,calories,dietTypeSelected,healthConcernSelected);
         //$('#js-search-bar').val("");
         //$('#min-cal').val("");
         //$('#max-cal').val("");
         $('#result-list').empty();
         $('#js-error-message').empty();
-        $('#result-number-display').empty();
     })
 }
 
