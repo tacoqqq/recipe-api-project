@@ -27,6 +27,7 @@ function filterListener(){
         $('.diet-type-option').prop('checked',false);
     });
 */
+
 //Below listen for the health concern filter.
     $('.health-concern-option').click(event => {
         //When click on filter option, unselect the "No Preference" button.
@@ -67,7 +68,7 @@ function checkCalorieInput(min,max) {
 
 function formatParameter(paramValueObj){
     const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
-    const paramValueArr = paramArr.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(paramValueObj[key])}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
+    const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
     return paramValueArr.join('&');
 }
 
@@ -93,8 +94,7 @@ function displayResults(responseJson){
     }
 }
 
-function getRecipes(userInput,calorieRange,dietType){
-    console.log('getRecipes')
+function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
     const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
     const completeQuery = queryArr.join(","); // "chick,tomato"
 
@@ -103,11 +103,16 @@ function getRecipes(userInput,calorieRange,dietType){
         app_key: appKey,
         q: completeQuery,
         calories: calorieRange,
-        diet: dietType
+        diet: dietType,
+        health: healthConcernSelected
     };
 
     if (dietType === "no-preference"){
         delete param.diet;
+    }
+
+    if (healthConcernSelected === "no-preference"){
+        delete param.health;
     }
 
     console.log(param)
@@ -125,8 +130,26 @@ function getRecipes(userInput,calorieRange,dietType){
         })
         .then(responseJson => displayResults(responseJson))
         .catch(err => {
-            $('#js-error-message').text(`Something went wrong: ${err.message}`)
+            $('#js-error-message').text(`Something went wrong: ${err.message}. Try again for another search！`)
         })
+}
+
+//I don't know what happened with this function.....
+function checkHealthConcernInput(){
+    console.log('enter checkHealthConcernInput')
+
+    if ($('#health-no-preference').prop('checked')){
+        return "no-preference"
+    }
+
+    let finalResult = [];
+
+    $('.health-concern-option').each(function(){
+        if ($(this).prop('checked')){
+            finalResult.push($(this).val())
+        }
+    })
+    return finalResult.join('&health=')
 }
 
 
@@ -139,12 +162,15 @@ function watchForm(){
         const maxCal = $('#max-cal').val();
         const calories = checkCalorieInput(minCal,maxCal);
         const dietTypeSelected = $('.diet-type-option:checked').val();
-        getRecipes(searchTerm,calories,dietTypeSelected);
+        const healthConcernSelected = checkHealthConcernInput();
+        console.log(healthConcernSelected);
+        getRecipes(searchTerm,calories,dietTypeSelected,healthConcernSelected);
         //$('#js-search-bar').val("");
         //$('#min-cal').val("");
         //$('#max-cal').val("");
         $('#result-list').empty();
         $('#js-error-message').empty();
+        $('#result-number-display').empty();
     })
 }
 
