@@ -56,12 +56,16 @@ fieldset {
 
 
 section#display-result {
-  font-size: 10px;
   text-align: left;
   max-width: 800px;
   margin: 0 auto;
 }
 
+#result-list {
+  list-style: none;
+}
+
 .hidden {
     display: none;
 }
+

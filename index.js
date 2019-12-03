@@ -3,8 +3,9 @@ const appKey = "e1d29fa29c215f19e1408451b2c270b4";
 const baseUrl = "https://api.edamam.com/search";
 
 //This function listens for the click events happened on the filters.
+
 function filterListener(){
-//Below listen for the diet type filter.
+/*Below listen for the diet type filter.
     $('.diet-type-option').click(event => {
         //When click on filter option, unselect the "No Preference" button.
         $('#diet-no-preference').prop('checked',false);
@@ -25,7 +26,7 @@ function filterListener(){
     $('#diet-no-preference').click(event => {
         $('.diet-type-option').prop('checked',false);
     });
-
+*/
 //Below listen for the health concern filter.
     $('.health-concern-option').click(event => {
         //When click on filter option, unselect the "No Preference" button.
@@ -49,7 +50,9 @@ function filterListener(){
     });
 }
 
+
 function checkCalorieInput(min,max) {
+    console.log('checkcalorieinput')
     let minCal = "0";
     let maxCal = "10000";
     if (min != ""){
@@ -85,21 +88,30 @@ function displayResults(responseJson){
             <p><img src="${recipeImage}"></p>
             <p>Serving Size: ${recipeYield}</p>
             <p>Total Calories: ${recipeCalorie.toFixed(2)} KCal / ${(recipeCalorie / recipeYield).toFixed(2)} KCal per Serving</p>
-            <p><a href="${recipeUrl}">Click to read more</a></p>
+            <p><a href="${recipeUrl}">Click to read the recipe</a></p>
             </li>`)
     }
 }
 
-
-function getRecipes(userInput,calorieRange){
+function getRecipes(userInput,calorieRange,dietType){
+    console.log('getRecipes')
     const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
     const completeQuery = queryArr.join(","); // "chick,tomato"
+
     const param = {
         app_id: appId,
         app_key: appKey,
         q: completeQuery,
-        calories: calorieRange
+        calories: calorieRange,
+        diet: dietType
     };
+
+    if (dietType === "no-preference"){
+        delete param.diet;
+    }
+
+    console.log(param)
+
     const queryString = formatParameter(param);
     const finalUrl = baseUrl + '?' + queryString;
     console.log(finalUrl);
@@ -120,16 +132,19 @@ function getRecipes(userInput,calorieRange){
 
 function watchForm(){
     $('#main-form').submit(event => {
+        console.log('hello')
         event.preventDefault();
         const searchTerm = $('#js-search-bar').val();  
         const minCal = $('#min-cal').val();
         const maxCal = $('#max-cal').val();
         const calories = checkCalorieInput(minCal,maxCal);
-        getRecipes(searchTerm,calories);
+        const dietTypeSelected = $('.diet-type-option:checked').val();
+        getRecipes(searchTerm,calories,dietTypeSelected);
         //$('#js-search-bar').val("");
         //$('#min-cal').val("");
         //$('#max-cal').val("");
         $('#result-list').empty();
+        $('#js-error-message').empty();
     })
 }
 
