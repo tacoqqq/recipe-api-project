@@ -15,13 +15,19 @@
         <form id="main-form"> 
             <label for="js-search-bar"><input id="js-search-bar" type="text" name="search-term" placeholder="Search ingredients or dishes eg. chicken,pasta" required></label>
             <input type="image" id="search-image" name="submit" alt="submit" src="img/search-img.png">
-            <div class="filter">
+            <div class="filter-container">
                 <form class="filter-form">
-                    <div class="calorie-filter-container">
-                        <span>Calorie Range Filter:</span>
-                        <input class="calorie-filter" id="min-cal" type="text" placeholder="Min">
-                        <span>to</span>
-                        <input class="calorie-filter" id="max-cal" type="text" placeholder="Max">
+                    <div id="filter-line-one">
+                        <div class="max-result-container">
+                            <label>Max Reuslts Number:
+                            <input class="filter" id="max-result-filter" type="text" placeholder="100"></label>
+                        </div>
+                        <div class="calorie-filter-container">
+                            <label>Calorie Range Filter:
+                            <input class="filter" id="min-cal" type="text" placeholder="Min"></span>
+                            <span>to</span>
+                            <input class="filter" id="max-cal" type="text" placeholder="Max">
+                        </div>
                     </div>
                     <fieldset class="diet-type-conatiner">
                         <legend>Diet Type Filter</legend>
@@ -45,7 +51,6 @@
             </div>
         </form>
         <section id="display-result" class="hidden">
-            <h2 id="result-number-display">There are <span id="search-result-number">0</span> matching recipes:</h2>
             <p id="js-error-message" class="error-message"></p>
             <ul id="result-list"></ul>
         </section>

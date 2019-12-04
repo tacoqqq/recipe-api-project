@@ -33,16 +33,21 @@ h1 {
     top: 10px;
 }
 
-.filter {
+.filter-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 10px;
     font-size: 14px;  
+    text-align: left;
 }
 
-.calorie-filter {
+.filter {
     display: inline-block;
-    padding: 8px;
+    padding: 4px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    width:50%;
+    max-width: 100px;
 }
 
 label {

@@ -51,31 +51,38 @@ function filterListener(){
 }
 
 
-function displayResults(responseJson){
-    let totalResultNumber = responseJson.hits.length;
-    let recipeArr = responseJson.hits;
+function displayResults(responseJson,maxResults){
+    try {
+        let totalResultNumber = responseJson.count;
+        let recipeArr = responseJson.hits;
 
-    //12/3/2019 note: set the temporarylimit to test the display otherwise it takes forever to load. need to develop pagination later
-    let temporaryLimit = 10;
+        if (maxResults === "") {
+            maxResults = totalResultNumber;
+        } else if (totalResultNumber > maxResults){
+            totalResultNumber = maxResults;
+        } 
 
-    $('#display-result').removeClass('hidden');
-    $('#search-result-number').text(totalResultNumber);
-    for (let i = 0 ; i < temporaryLimit ; i++){
-        let recipeName = recipeArr[i].recipe.label;
-        console.log(recipeName);
-        let recipeImage = recipeArr[i].recipe.image;
-        let recipeUrl = recipeArr[i].recipe.url;
-        let recipeCalorie = recipeArr[i].recipe.calories;
-        let recipeYield = recipeArr[i].recipe.yield
-        $('#result-list').append(
-            `<li><h3>${recipeName}</h3>
-            <p><img src="${recipeImage}"></p>
-            <p>Serving Size: ${recipeYield}</p>
-            <p>Total Calories: ${recipeCalorie.toFixed(2)} KCal / ${(recipeCalorie / recipeYield).toFixed(2)} KCal per Serving</p>
-            <p><a href="${recipeUrl}">Click to read the recipe</a></p>
-            </li>`)
+        $('#display-result').removeClass('hidden');
+        for (let i = 0 ; i < totalResultNumber ; i++){
+            let recipeName = recipeArr[i].recipe.label;
+            console.log(recipeName);
+            let recipeImage = recipeArr[i].recipe.image;
+            let recipeUrl = recipeArr[i].recipe.url;
+            let recipeCalorie = recipeArr[i].recipe.calories;
+            let recipeYield = recipeArr[i].recipe.yield;
+            $('#result-list').append(
+                `<li><h3>${recipeName}</h3>
+                <p><img src="${recipeImage}"></p>
+                <p>Serving Size: ${recipeYield}</p>
+                <p>Total Calories: ${recipeCalorie.toFixed(2)} KCal / ${(recipeCalorie / recipeYield).toFixed(2)} KCal per Serving</p>
+                <p><a href="${recipeUrl}">Click to read the recipe</a></p>
+                </li>`)
+    }}
+    catch(err){
+        //console.log(err)
     }
 }
+
 
 function formatParameter(paramValueObj){
     const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
@@ -84,7 +91,7 @@ function formatParameter(paramValueObj){
 }
 
 
-function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
+function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxResultNum){
     const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
     const completeQuery = queryArr.join(","); // "chick,tomato"
     const encodedCompleteQuery = completeQuery.replace(" ", "%20")
@@ -95,7 +102,9 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
         q: encodedCompleteQuery,
         calories: calorieRange,
         diet: dietType,
-        health: healthConcernSelected
+        health: healthConcernSelected,
+        //from: "0",
+        to: "100"
     };
 
     if (dietType === "no-preference"){
@@ -118,12 +127,12 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected){
             if (response.ok){
                 return response.json();
             }
-            //how do I customize error message?
-            throw new Error(response.statusText);
+            throw new Error(response);
         })
-        .then(responseJson => displayResults(responseJson))
+        .then(responseJson => displayResults(responseJson,maxResultNum))
         .catch(err => {
-            $('#js-error-message').text(`Something went wrong: ${err.message}. Try again for another search！`)
+            //$('#js-error-message').text(`Something went wrong: ${err.message}. Try again for another search！`)
+            console.log(err)
         })
 }
 
@@ -161,12 +170,14 @@ function watchForm(){
     $('#main-form').submit(event => {
         event.preventDefault();
         const searchTerm = $('#js-search-bar').val();  
+        const maxResultInput = $('#max-result-filter').val();
+        console.log(maxResultInput)
         const minCal = $('#min-cal').val();
         const maxCal = $('#max-cal').val();
         const calories = checkCalorieInput(minCal,maxCal);
         const dietTypeSelected = $('.diet-type-option:checked').val();
         const healthConcernSelected = checkHealthConcernInput();
-        getRecipes(searchTerm,calories,dietTypeSelected,healthConcernSelected);
+        getRecipes(searchTerm,calories,dietTypeSelected,healthConcernSelected,maxResultInput);
         //$('#js-search-bar').val("");
         //$('#min-cal').val("");
         //$('#max-cal').val("");
