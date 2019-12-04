@@ -2,6 +2,16 @@ const appId = "df2e7bdf";
 const appKey = "e1d29fa29c215f19e1408451b2c270b4";
 const baseUrl = "https://api.edamam.com/search";
 
+
+//Listen for customize button click
+function customizeSearchListener(){
+    $('#search-customize').click( event => {
+        event.preventDefault;
+        $('.filter-container').toggleClass('hidden');
+        $('#search-customize').toggleClass('button-active');
+})
+}
+
 //This function listens for the click events happened on the filters.
 function filterListener(){
 /*Below listen for the diet type filter.
@@ -57,8 +67,10 @@ function displayResults(responseJson,maxResults){
         let recipeArr = responseJson.hits;
 
         if (maxResults === "") {
-            maxResults = totalResultNumber;
-        } else if (totalResultNumber > maxResults){
+            maxResults = 100;
+        }
+        
+        if (totalResultNumber > maxResults){
             totalResultNumber = maxResults;
         } 
 
@@ -189,5 +201,5 @@ function watchForm(){
 
 $(filterListener);
 $(watchForm);
-
+$(customizeSearchListener);
 

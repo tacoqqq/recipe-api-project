@@ -5,12 +5,15 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.outer-container {
+    position: relative;
+    top: 50px;
+}
+
 .container {
     width: 85%;
     margin: auto auto;
     text-align: center;
-    position: relative;
-    top: 50px;
 }
 
 
@@ -18,12 +21,18 @@ h1 {
     font-size: 36px;
 }
 
+#main-form {
+    margin: 0 auto;
+}
+
+
 #js-search-bar {
-    width: 80%;
-    max-width: 500px;
-    padding: 8px;
+    width: 70%;
+    max-width: 600px;
+    padding: 12px;
     margin: 5px;
     border-radius: 10px;
+    font-size: 16px;
 }
 
 #search-image {
@@ -32,6 +41,7 @@ h1 {
     position: relative;
     top: 10px;
 }
+
 
 .filter-container {
     max-width: 800px;
@@ -46,7 +56,7 @@ h1 {
     padding: 4px;
     margin-bottom: 8px;
     font-size: 14px;
-    width:50%;
+    width: 45%;
     max-width: 100px;
 }
 
@@ -74,3 +84,12 @@ section#display-result {
     display: none;
 }
 
+button {
+    padding: 8px;
+    margin: 1.2em;
+}
+
+.button-active {
+    background-color: darkgreen;
+    color: white;
+}
