@@ -17,31 +17,8 @@ function customizeSearchListener(){
 })
 }
 
-//This function listens for the click events happened on the filters.
+//This function listens for the click events happened on the filters
 function filterListener(){
-/*Below listen for the diet type filter.
-    $('.diet-type-option').click(event => {
-        //When click on filter option, unselect the "No Preference" button.
-        $('#diet-no-preference').prop('checked',false);
-
-        //When all filter options are unchecked, the "No Preference" button is automaically back on. 
-        let ifChecked = false;
-        $('.diet-type-option').each(function(){
-            if ($(this).prop('checked')){
-                ifChecked = true;
-            } 
-        })
-        if (!ifChecked) {
-            $('#diet-no-preference').prop('checked',true);
-        }
-    })
-
-    //when click on 'No Preference' button, unselect the rest checkboxes.
-    $('#diet-no-preference').click(event => {
-        $('.diet-type-option').prop('checked',false);
-    });
-*/
-
 //Below listen for the health concern filter.
     $('.health-concern-option').click(event => {
         //When click on filter option, unselect the "No Preference" button.
@@ -65,6 +42,7 @@ function filterListener(){
     });
 }
 
+//Listen for clicks on the next page button.
 function nextPageListner(){
     $('#js-result-summary, #pagination').on('click', '.next-page', function() {
         if (currentPage < totalPage) {
@@ -74,6 +52,7 @@ function nextPageListner(){
     })
 }
 
+//Listen for clicks on the previous page button.
 function previousPageListner(){
     $('#js-result-summary , #pagination').on('click', '.previous-page', function() {
         if (currentPage > 1) {
@@ -83,14 +62,14 @@ function previousPageListner(){
     })
 }
 
-
+//Display search results.
 function displayResults(responseJson,maxResults,userInputSearch){
     try {
         let totalResultNumber = responseJson.count;
         let recipeArr = responseJson.hits;
 
         if (totalResultNumber === 0){
-            $('#js-error-message').html('<p>Uh oh :( ...No matching result found! Wannat try again with something else?</p>')
+            $('#js-error-message').text('Uh oh :( ...No matching result found! Wannat try again with something else?')
         }
 
         if (maxResults === "") {
@@ -100,7 +79,6 @@ function displayResults(responseJson,maxResults,userInputSearch){
         if (totalResultNumber > maxResults){
             totalResultNumber = maxResults;
         } 
-
 
         //pagination
         totalPage = Math.ceil(totalResultNumber / 10);
@@ -120,12 +98,17 @@ function displayResults(responseJson,maxResults,userInputSearch){
             $('#result-list').append(
                 `<li class="recipe-item"">
                     <div class="recipe-content-container">
-                        <img class="recipe-img" src="${recipeImage}">
+                        <div class="img-container">
+                            <img class="recipe-img" src="${recipeImage}" alt="recipe image">
+                            <div class="middle">
+                                <div class="text"><a class="hover-link" href="${recipeUrl}" target="_blank">Read Recipe</a></div>
+                            </div>
+                        </div>
                         <div class="recipe-description">
                             <h3 class="recipe-title">${recipeName}</h3>
                             <p>Serving Size: ${recipeYield}</p>
                             <p>Total Calories: ${recipeCalorie.toFixed(2)} KCal / ${(recipeCalorie / recipeYield).toFixed(2)} KCal per Serving</p>
-                            <p><a href="${recipeUrl}" target="_blank">Click to read the recipe >></a></p>
+                            <p><a class="content-link" href="${recipeUrl}" target="_blank">Click to read the recipe >></a></p>
                         </div>
                     <div>
                 </li>`)
@@ -135,14 +118,14 @@ function displayResults(responseJson,maxResults,userInputSearch){
     }
 }
 
-
+//Format query.
 function formatParameter(paramValueObj){
     const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
     const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
     return paramValueArr.join('&');
 }
 
-
+//Get response from API
 function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxResultNum){
     const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
     const completeQuery = queryArr.join(","); // "chick,tomato"
@@ -191,7 +174,7 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxRes
         })
 }
 
-
+//Check and store Filter Result
 function checkHealthConcernInput(){
     if ($('#health-no-preference').prop('checked')){
         return "no-preference"
@@ -207,7 +190,7 @@ function checkHealthConcernInput(){
     return finalResult.join('&health=')
 }
 
-
+//Check and store Filter Result
 function checkCalorieInput(min,max) {
     let minCal = "0";
     let maxCal = "10000";
@@ -220,7 +203,7 @@ function checkCalorieInput(min,max) {
     return `${minCal}-${maxCal}`
 }
 
-
+//Listen for clicks on search button
 function watchForm(){
     $('#main-form').submit(event => {
         event.preventDefault();
@@ -228,6 +211,7 @@ function watchForm(){
         if (!$('.filter-container').hasClass('hidden')) {
             $('.filter-container').toggleClass('hidden');
         }
+        currentPage = 1;
         searchTerm = $('#js-search-bar').val();  
         maxResultInput = $('#max-result-filter').val();
         console.log(maxResultInput)
@@ -242,6 +226,8 @@ function watchForm(){
         //$('#max-cal').val("");
         $('#result-list').empty();
         $('#js-error-message').empty();
+        $('#js-result-summary').empty();
+        $('#pagination').empty();
     })
 }
 

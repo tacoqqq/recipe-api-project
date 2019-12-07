@@ -108,6 +108,17 @@ section#display-result {
   padding: 0;
 }
 
+#js-error-message {
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 14px; 
+    line-height: 1.6;
+    color: #F86624;
+    font-weight: 600;
+}
+
 .hidden {
     display: none;
 }
@@ -133,10 +144,12 @@ button {
     font-size: 24px;
     color: green;
     font-family: 'Yeseva One', cursive;
+    margin-top: 5px;
 }
 
 .recipe-content-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     font-size: 14px;
 }
@@ -146,13 +159,54 @@ button {
     padding: 10px;
 }
 
-.recipe-img {
-    width: 40%;
-    height: 40%;
+.img-container {
+    width: 50%;
+    height: 50%;
     max-width: 250px;
     padding-top: 2%;
     padding-bottom: 2%;
-    vertical-align: center;
+    position: relative;  
+}
+
+.recipe-img {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    margin-top: 10px;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+  
+.img-container:hover .recipe-img {
+    opacity: 0.3;
+}
+  
+.img-container:hover .middle {
+    opacity: 1;
+}
+
+.text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+
+a.hover-link {
+    text-decoration: none;
+    color: white;
 }
 
 #js-result-summary {
@@ -198,10 +252,24 @@ footer {
     text-align: center;
 }
 
-a {
+a.content-link {
     color: #484432;
 }
 
-a:hover {
+a.content-link:hover {
     color: #F86624;
+}
+
+
+@media screen and (min-width: 768px){
+    .recipe-content-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .recipe-img {
+        margin-top: 0px;
+    }
 }
