@@ -6,7 +6,7 @@
     <title>Recipe Overwatch</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Yeseva+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans%7CYeseva+One&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
@@ -19,7 +19,7 @@
             <form id="main-form">
                 <div>
                     <label for="js-search-bar"><input id="js-search-bar" type="text" name="search-term" placeholder="Ingredients, dishes eg. chicken,pasta" required></label>
-                    <input type="image" id="search-image" name="submit" alt="submit" src="img/search-img.png">
+                    <label for="search-image"><input type="image" id="search-image" name="submit" alt="submit" src="img/search-img.png"></label>
                 </div>
                 <div id="customize-container">
                     <button type="button" id="search-customize">Customize Your Search ▼</button>
@@ -30,14 +30,17 @@
             <form class="filter-form">
                 <div id="filter-line-one">
                     <div class="max-result-container">
-                        <label>Max Results Number:
+                        <label for="max-result-filter">Max Results Number:
                         <input class="filter" id="max-result-filter" type="text" placeholder="100"></label>
                     </div>
                     <div class="calorie-filter-container">
-                        <label>Calorie Range Filter:
-                        <input class="filter" id="min-cal" type="text" placeholder="Min"></span>
+                        <label for="min-cal">Calorie Range Filter:
+                            <input class="filter" id="min-cal" type="text" placeholder="Min">
+                        </label>
                         <span>to</span>
-                        <input class="filter" id="max-cal" type="text" placeholder="Max">
+                        <label for="max-cal">
+                            <input class="filter" id="max-cal" type="text" placeholder="Max">
+                        </label>
                     </div>
                 </div>
                 <fieldset class="diet-type-conatiner">
@@ -67,7 +70,7 @@
             <p id="pagination" class="result-summary"></p>  
         </section>
         <footer>
-            <p>&copy; 2019 Daphne Fang </p>
+            <p>&copy; 2019 Daphne Fang</p>
             <div>
                 <ul class="pro-icon-container">
                     <li class="pro-icon"><a href="https://www.linkedin.com/in/daphneysfang" target="_blank"><img src="img/logos/Linkedin-logo.png" alt="linkedin"></a></li>

@@ -30,7 +30,7 @@ html, body {
 h1 {
     font-size: 72px;
     font-family: 'Yeseva One', cursive;
-    color: #ff6600;
+    color: #B85600;
 }
 
 #main-form {
@@ -189,7 +189,7 @@ button {
     text-align: center;
 }
   
-.img-container:hover .recipe-img {
+.img-container:hover .recipe-image {
     opacity: 0.3;
 }
   

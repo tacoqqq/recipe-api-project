@@ -69,7 +69,7 @@ function displayResults(responseJson,maxResults,userInputSearch){
         let recipeArr = responseJson.hits;
 
         if (totalResultNumber === 0){
-            $('#js-error-message').text('Uh oh :( ...No matching result found! Wannat try again with something else?')
+            $('#js-error-message').text('Uh oh :( No matching result found! Wanna try again with something else?')
         }
 
         if (maxResults === "") {
