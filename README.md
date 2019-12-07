@@ -9,6 +9,6 @@ Technology used:
 HTML, CSS, JavaScript, jQuery
 
 Screenshots: 
-Homescreen: https://ibb.co/BwN8wyP
-Filter: https://ibb.co/XzDyWYw
-Full View: https://ibb.co/DzBVsbc
+![Homescreen](https://ibb.co/BwN8wyP)
+![Filter](https://ibb.co/XzDyWYw)
+![Full View](https://ibb.co/DzBVsbc)
