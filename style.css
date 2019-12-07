@@ -10,7 +10,6 @@ html, body {
     background-color: #fafaf5
 }
 
-
 .outer-container {
     position: relative;
     top: 60px;
@@ -26,7 +25,6 @@ html, body {
     text-align: center;
 }
 
-
 h1 {
     font-size: 72px;
     font-family: 'Yeseva One', cursive;
@@ -36,7 +34,6 @@ h1 {
 #main-form {
     margin: 0 auto;
 }
-
 
 #js-search-bar {
     width: 70%;
@@ -59,7 +56,6 @@ h1 {
     margin: 2%;
     font-size: 14px;
 }
-
 
 .filter-container {
     max-width: 800px;
@@ -93,19 +89,19 @@ fieldset {
 
 input[type="radio"], input[type="checkbox"] {
     margin-right: 5px;
-  }
+}
 
 section#display-result {
-  text-align: left;
-  max-width: 800px;
-  margin: 0 auto;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 #result-list {
-  list-style: none;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0;
+    list-style: none;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
 }
 
 #js-error-message {

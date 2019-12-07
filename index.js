@@ -14,7 +14,7 @@ function customizeSearchListener(){
         event.preventDefault;
         $('.filter-container').toggleClass('hidden');
         $('#search-customize').toggleClass('button-active');
-})
+    })
 }
 
 //This function listens for the click events happened on the filters
