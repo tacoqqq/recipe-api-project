@@ -12,6 +12,9 @@ There are mulilple filters available, including max results, calorie range, diet
 HTML, CSS, JavaScript, jQuery
 
 <h2>Screenshots</h2>
-![Homescreen](https://i.ibb.co/Lv54vxP/Screen-Shot-2019-12-07-at-12-16-15-PM.jpg)
-![Filter](https://i.ibb.co/8jbzmYh/Screen-Shot-2019-12-07-at-12-16-47-PM.jpg)
-![Full View](https://i.ibb.co/PF2m3YX/screencapture-tacoqqq-github-io-recipe-overwatch-2019-12-07-12-20-31.png)
+Homescreen
+<img src="https://i.ibb.co/Lv54vxP/Screen-Shot-2019-12-07-at-12-16-15-PM.jpg">
+Filter
+<img src="https://i.ibb.co/8jbzmYh/Screen-Shot-2019-12-07-at-12-16-47-PM.jpg">
+Full Review
+<img src="https://i.ibb.co/PF2m3YX/screencapture-tacoqqq-github-io-recipe-overwatch-2019-12-07-12-20-31.png">
