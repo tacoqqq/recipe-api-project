@@ -19,7 +19,6 @@ function customizeSearchListener(){
 
 //This function listens for the click events happened on the filters
 function filterListener(){
-//Below listen for the health concern filter.
     $('.health-concern-option').click(event => {
         //When click on filter option, unselect the "No Preference" button.
         $('#health-no-preference').prop('checked',false);
@@ -86,9 +85,7 @@ function displayResults(responseJson,maxResults,userInputSearch){
         $('#display-result').removeClass('hidden');
         $('#result-list').html('');        
         for (let i = (currentPage - 1) * 10 ; i < Math.min((currentPage - 1) * 10 + 10, totalResultNumber) ; i++){
-            console.log(i);
             let recipeName = recipeArr[i].recipe.label;
-            console.log(recipeName);
             let recipeImage = recipeArr[i].recipe.image;
             let recipeUrl = recipeArr[i].recipe.url;
             let recipeCalorie = recipeArr[i].recipe.calories;
@@ -120,16 +117,16 @@ function displayResults(responseJson,maxResults,userInputSearch){
 
 //Format query.
 function formatParameter(paramValueObj){
-    const paramArr = Object.keys(paramValueObj); // ["app_id","app_key","q"]
-    const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`); //["app_id=xxxxx","app_key=xxxx","q=chicken,tomato"]
+    const paramArr = Object.keys(paramValueObj);
+    const paramValueArr = paramArr.map(key => `${key}=${paramValueObj[key]}`);
     return paramValueArr.join('&');
 }
 
-//Get response from API
+//Get response from API.
 function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxResultNum){
-    const queryArr = userInput.toLowerCase().split(",")// ["chicken","tomato"]
-    const completeQuery = queryArr.join(","); // "chick,tomato"
-    const encodedCompleteQuery = completeQuery.replace(" ", "%20")
+    const queryArr = userInput.toLowerCase().split(",");
+    const completeQuery = queryArr.join(",");
+    const encodedCompleteQuery = completeQuery.replace(" ", "%20");
 
     const param = {
         app_id: appId,
@@ -150,12 +147,8 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxRes
         delete param.health;
     }
 
-    console.log(param)
-
     const queryString = formatParameter(param);
     const finalUrl = baseUrl + '?' + queryString;
-
-    console.log(finalUrl);
 
     fetch(finalUrl)
         .then(response => {
@@ -169,12 +162,11 @@ function getRecipes(userInput,calorieRange,dietType,healthConcernSelected,maxRes
             displayResults(responseJson,maxResultNum,userInput)
         })
         .catch(err => {
-            //$('#js-error-message').text(`Something went wrong: ${err.message}. Try again for another search！`)
             console.log(err)
         })
 }
 
-//Check and store Filter Result
+//Check and store Filter Result.
 function checkHealthConcernInput(){
     if ($('#health-no-preference').prop('checked')){
         return "no-preference"
@@ -190,7 +182,7 @@ function checkHealthConcernInput(){
     return finalResult.join('&health=')
 }
 
-//Check and store Filter Result
+//Check and store Filter Result.
 function checkCalorieInput(min,max) {
     let minCal = "0";
     let maxCal = "10000";
@@ -203,7 +195,7 @@ function checkCalorieInput(min,max) {
     return `${minCal}-${maxCal}`
 }
 
-//Listen for clicks on search button
+//Listen for clicks on search button.
 function watchForm(){
     $('#main-form').submit(event => {
         event.preventDefault();
@@ -214,16 +206,14 @@ function watchForm(){
         currentPage = 1;
         searchTerm = $('#js-search-bar').val();  
         maxResultInput = $('#max-result-filter').val();
-        console.log(maxResultInput)
+
         const minCal = $('#min-cal').val();
         const maxCal = $('#max-cal').val();
         const calories = checkCalorieInput(minCal,maxCal);
         const dietTypeSelected = $('.diet-type-option:checked').val();
         const healthConcernSelected = checkHealthConcernInput();
         getRecipes(searchTerm,calories,dietTypeSelected,healthConcernSelected,maxResultInput);
-        //$('#js-search-bar').val("");
-        //$('#min-cal').val("");
-        //$('#max-cal').val("");
+
         $('#result-list').empty();
         $('#js-error-message').empty();
         $('#js-result-summary').empty();
