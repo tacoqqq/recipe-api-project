@@ -66,7 +66,7 @@ function filterListener(){
 }
 
 function nextPageListner(){
-    $('#js-result-summary').on('click', '#next-page', function() {
+    $('#js-result-summary, #pagination').on('click', '.next-page', function() {
         if (currentPage < totalPage) {
             currentPage++;
             displayResults(json, maxResultInput, searchTerm);
@@ -75,7 +75,7 @@ function nextPageListner(){
 }
 
 function previousPageListner(){
-    $('#js-result-summary').on('click', '#previous-page', function() {
+    $('#js-result-summary , #pagination').on('click', '.previous-page', function() {
         if (currentPage > 1) {
             currentPage--;
             displayResults(json, maxResultInput, searchTerm);
@@ -89,6 +89,10 @@ function displayResults(responseJson,maxResults,userInputSearch){
         let totalResultNumber = responseJson.count;
         let recipeArr = responseJson.hits;
 
+        if (totalResultNumber === 0){
+            $('#js-error-message').html('<p>Uh oh :( ...No matching result found! Wannat try again with something else?</p>')
+        }
+
         if (maxResults === "") {
             maxResults = 100;
         }
@@ -97,6 +101,8 @@ function displayResults(responseJson,maxResults,userInputSearch){
             totalResultNumber = maxResults;
         } 
 
+
+        //pagination
         totalPage = Math.ceil(totalResultNumber / 10);
 
         $('#display-result').removeClass('hidden');
@@ -109,7 +115,8 @@ function displayResults(responseJson,maxResults,userInputSearch){
             let recipeUrl = recipeArr[i].recipe.url;
             let recipeCalorie = recipeArr[i].recipe.calories;
             let recipeYield = recipeArr[i].recipe.yield;
-            $('#js-result-summary').html(`<button id="previous-page" type="button"> < </button> <span class="grey">${userInputSearch} Recipes</span> <span class="number">${totalResultNumber}</span> <button id="next-page" type="button"> > </button> <p>${currentPage} / ${totalPage}</p> `)
+            $('#js-result-summary').html(`<button class="previous-page" type="button"> < </button> <span class="grey">${userInputSearch} Recipes</span> <span class="number">${totalResultNumber}</span> <button class="next-page" type="button"> > </button> <p>${currentPage} / ${totalPage}</p> `)
+            $('#pagination').html(`<button class="previous-page" type="button"> < </button> <span class="grey">${userInputSearch} Recipes</span> <span class="number">${totalResultNumber}</span> <button class="next-page" type="button"> > </button> <p>${currentPage} / ${totalPage}</p> `)
             $('#result-list').append(
                 `<li class="recipe-item"">
                     <div class="recipe-content-container">
@@ -118,7 +125,7 @@ function displayResults(responseJson,maxResults,userInputSearch){
                             <h3 class="recipe-title">${recipeName}</h3>
                             <p>Serving Size: ${recipeYield}</p>
                             <p>Total Calories: ${recipeCalorie.toFixed(2)} KCal / ${(recipeCalorie / recipeYield).toFixed(2)} KCal per Serving</p>
-                            <p><a href="${recipeUrl}">Click to read the recipe</a></p>
+                            <p><a href="${recipeUrl}" target="_blank">Click to read the recipe >></a></p>
                         </div>
                     <div>
                 </li>`)

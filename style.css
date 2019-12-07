@@ -7,6 +7,7 @@ html, body {
     font-family: 'Open Sans', sans-serif;
     height: 100%;
     position: relative;
+    background-color: #fafaf5
 }
 
 
@@ -14,7 +15,7 @@ html, body {
     position: relative;
     top: 60px;
     min-height: 95vh;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
     overflow: hidden;
     position: relative;
 }
@@ -27,8 +28,9 @@ html, body {
 
 
 h1 {
-    font-size: 48px;
+    font-size: 72px;
     font-family: 'Yeseva One', cursive;
+    color: #ff6600;
 }
 
 #main-form {
@@ -111,8 +113,9 @@ section#display-result {
 }
 
 button {
-    padding: 8px;
+    padding: 4px 10px;
     margin: 1.2em;
+    border-radius: 20px;
 }
 
 .button-active {
@@ -135,6 +138,7 @@ button {
 .recipe-content-container {
     display: flex;
     align-items: center;
+    font-size: 14px;
 }
 
 .recipe-description {
@@ -188,4 +192,16 @@ footer {
 .pro-icon img {
     width: 28px;
     margin: 0 10px;
+}
+
+#pagination {
+    text-align: center;
+}
+
+a {
+    color: #484432;
+}
+
+a:hover {
+    color: #F86624;
 }
