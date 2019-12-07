@@ -109,7 +109,7 @@ function displayResults(responseJson,maxResults,userInputSearch){
             let recipeUrl = recipeArr[i].recipe.url;
             let recipeCalorie = recipeArr[i].recipe.calories;
             let recipeYield = recipeArr[i].recipe.yield;
-            $('#js-result-summary').html(`<button id="previous-page" type="button"> < </button> <span class="grey">${userInputSearch} Recipes</span> <span class="number">${totalResultNumber}</span> <button id="next-page" type="button"> > </button>`)
+            $('#js-result-summary').html(`<button id="previous-page" type="button"> < </button> <span class="grey">${userInputSearch} Recipes</span> <span class="number">${totalResultNumber}</span> <button id="next-page" type="button"> > </button> <p>${currentPage} / ${totalPage}</p> `)
             $('#result-list').append(
                 `<li class="recipe-item"">
                     <div class="recipe-content-container">
