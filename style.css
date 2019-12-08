@@ -185,7 +185,7 @@ button {
     text-align: center;
 }
   
-.img-container:hover .recipe-image {
+.img-container:hover .recipe-img {
     opacity: 0.3;
 }
   
